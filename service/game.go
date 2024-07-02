@@ -6,6 +6,7 @@ type Game struct {
 	board         *Board
 	numberOfTurns int
 	gameOver      bool
+	currentPlayer string
 }
 
 func InitializeGame() *Game {
@@ -22,6 +23,8 @@ func (g *Game) GameLoop() {
 	for !g.gameOver {
 		g.GameLogic()
 	}
+
+	g.GameOverPrompt(g.currentPlayer)
 }
 
 func WelcomePrompt() {
@@ -31,9 +34,9 @@ func WelcomePrompt() {
 func (g *Game) GameLogic() {
 	g.board.PrintBoard()
 
-	player := ChoosePlayer(g.numberOfTurns)
+	g.currentPlayer = ChoosePlayer(g.numberOfTurns)
 
-	err := g.board.PlaceOnBoard(player, ChooseLocation(player))
+	err := g.board.PlaceOnBoard(g.currentPlayer, ChooseLocation(g.currentPlayer))
 	if err != nil {
 		fmt.Println("ERROR: ", err.Error())
 	} else {
@@ -45,4 +48,11 @@ func (g *Game) GameLogic() {
 
 func (g *Game) IncrementGameTurns() {
 	g.numberOfTurns++
+}
+
+func (g *Game) GameOverPrompt(player string) {
+	fmt.Printf("Game Over, player %s won!\n", player)
+	fmt.Printf("Number of turns: %d\n\n", g.numberOfTurns)
+
+	g.board.PrintBoard()
 }
