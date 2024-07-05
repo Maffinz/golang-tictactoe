@@ -1,8 +1,7 @@
 package service
 
 import (
-	"fmt"
-	"tictactoe/TicTacToe/model"
+	"maffniz.com/tictactoe/model"
 )
 
 func ChoosePlayer(t int) string {
@@ -13,11 +12,29 @@ func ChoosePlayer(t int) string {
 	return "X"
 }
 
-func ChooseLocation(player string) model.Cordinate {
-	c := model.Cordinate{}
+func ChooseLocation(player string, loc int) model.Cordinate {
+	return model.Cordinate{X: calculateX(loc), Y: calculateY(loc)}
+}
 
-	fmt.Printf("Player '%s' enter Cordinate [x,y]: ", player)
-	fmt.Scanln(&c.X, &c.Y)
+func calculateY(loc int) int {
+	// 3 Has to to change to a variable to accomodate for other grids
+	if loc < 3 {
+		return loc - 1
+	}
 
-	return c
+	if loc%3 == 0 {
+		return 2
+	}
+	return loc - (3 * (loc / 3)) - 1
+}
+func calculateX(loc int) int {
+	// 3 Has to change to a variable to accomodate for other grids
+	if loc < 3 {
+		return 0
+	}
+
+	if loc%3 != 0 {
+		return loc / 3
+	}
+	return (loc / 3) - 1
 }

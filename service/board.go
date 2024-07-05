@@ -3,7 +3,8 @@ package service
 import (
 	"errors"
 	"fmt"
-	"tictactoe/TicTacToe/model"
+
+	"maffniz.com/tictactoe/model"
 )
 
 type Board struct {

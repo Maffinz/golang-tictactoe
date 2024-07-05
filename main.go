@@ -1,9 +1,10 @@
 package main
 
-import "tictactoe/TicTacToe/service"
+import "maffniz.com/tictactoe/service"
 
 func main() {
 	myGame := service.InitializeGame()
 
 	myGame.GameLoop()
+
 }

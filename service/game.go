@@ -36,7 +36,11 @@ func (g *Game) GameLogic() {
 
 	g.currentPlayer = ChoosePlayer(g.numberOfTurns)
 
-	err := g.board.PlaceOnBoard(g.currentPlayer, ChooseLocation(g.currentPlayer))
+	var loc int
+	fmt.Print("enter location: ")
+	fmt.Scanln(&loc)
+
+	err := g.board.PlaceOnBoard(g.currentPlayer, ChooseLocation(g.currentPlayer, loc))
 	if err != nil {
 		fmt.Println("ERROR: ", err.Error())
 	} else {
