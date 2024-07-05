@@ -1,30 +1,33 @@
 package service
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Game struct {
-	board         *Board
-	numberOfTurns int
-	gameOver      bool
-	currentPlayer string
+	Board         *Board
+	NumberOfTurns int
+	GameOver      bool
+	CurrentPlayer string
 }
 
 func InitializeGame() *Game {
 	return &Game{
-		board:         initializeBoard(),
-		numberOfTurns: 0,
-		gameOver:      false,
+		Board:         initializeBoard(),
+		NumberOfTurns: 0,
+		GameOver:      false,
 	}
 }
 
 func (g *Game) GameLoop() {
 	WelcomePrompt()
 
-	for !g.gameOver {
+	for !g.GameOver {
 		g.GameLogic()
 	}
 
-	g.GameOverPrompt(g.currentPlayer)
+	g.GameOverPrompt(g.CurrentPlayer)
 }
 
 func WelcomePrompt() {
@@ -32,31 +35,41 @@ func WelcomePrompt() {
 }
 
 func (g *Game) GameLogic() {
-	g.board.PrintBoard()
+	g.Board.PrintBoard()
 
-	g.currentPlayer = ChoosePlayer(g.numberOfTurns)
+	g.CurrentPlayer = ChoosePlayer(g.NumberOfTurns)
 
 	var loc int
 	fmt.Print("enter location: ")
 	fmt.Scanln(&loc)
 
-	err := g.board.PlaceOnBoard(g.currentPlayer, ChooseLocation(g.currentPlayer, loc))
+	err := g.Board.PlaceOnBoard(g.CurrentPlayer, ChooseLocation(g.CurrentPlayer, loc))
 	if err != nil {
 		fmt.Println("ERROR: ", err.Error())
 	} else {
 		g.IncrementGameTurns()
 	}
 
-	g.gameOver = g.board.CheckBoardForWinner()
+	g.GameOver = g.Board.CheckBoardForWinner()
 }
 
 func (g *Game) IncrementGameTurns() {
-	g.numberOfTurns++
+	g.NumberOfTurns++
+}
+
+func (g *Game) PlayerSelection(player string, loc int) error {
+	err := g.Board.PlaceOnBoard(player, ChooseLocation(player, loc))
+	if err != nil {
+		return errors.New("something happend when placing on board")
+	}
+
+	g.IncrementGameTurns()
+	return nil
 }
 
 func (g *Game) GameOverPrompt(player string) {
 	fmt.Printf("Game Over, player %s won!\n", player)
-	fmt.Printf("Number of turns: %d\n\n", g.numberOfTurns)
+	fmt.Printf("Number of turns: %d\n\n", g.NumberOfTurns)
 
-	g.board.PrintBoard()
+	g.Board.PrintBoard()
 }
