@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/Maffinz/tictactoe/model"
+	"github.com/Maffinz/golang-tictactoe/model"
 )
 
 type Board struct {

@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/Maffinz/tictactoe/model"
+	"github.com/Maffinz/golang-tictactoe/model"
 )
 
 func ChoosePlayer(t int) string {
