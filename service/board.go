@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"maffniz.com/tictactoe/model"
+	"github.com/Maffinz/tictactoe/model"
 )
 
 type Board struct {

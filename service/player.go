@@ -1,7 +1,7 @@
 package service
 
 import (
-	"maffniz.com/tictactoe/model"
+	"github.com/Maffinz/tictactoe/model"
 )
 
 func ChoosePlayer(t int) string {
